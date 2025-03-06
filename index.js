@@ -1,41 +1,44 @@
 const cards = [ 
     { 
-        title: 'Ad 1', 
+        title: 'Car Sale', 
         description: 'This is the first advertisement.', 
         image: 'https://placehold.co/150', 
         contact: 'contact1@example.com' 
     },
     { 
-        title: 'Ad 2', 
+        title: 'Bike for Rent', 
         description: 'This is the second advertisement.', 
         image: 'https://placehold.co/150', 
         contact: 'contact2@example.com' 
     },
     { 
-        title: 'Ad 3', 
+        title: 'House for Sale', 
         description: 'This is the third advertisement.', 
         image: 'https://placehold.co/150', 
         contact: 'contact3@example.com' 
     },
     { 
-        title: 'Ad 4', 
+        title: 'Job Offer', 
         description: 'This is the fourth advertisement.', 
         image: 'https://placehold.co/150', 
         contact: 'contact4@example.com' 
     },
     { 
-        title: 'Ad 5', 
+        title: 'Freelance Work', 
         description: 'This is the fifth advertisement.', 
         image: 'https://placehold.co/150', 
         contact: 'contact5@example.com' 
     },
     { 
-        title: 'Ad 6', 
+        title: 'Gadget Sale', 
         description: 'This is the sixth advertisement.', 
         image: 'https://placehold.co/150', 
         contact: 'contact6@example.com' 
     } 
 ];
+
+const inputElement = document.getElementById("filterTitle")
+const container = document.getElementById("advertisements")
 
 const createElement = (elem, classNames = []) => {
     const element = document.createElement(elem)
@@ -53,10 +56,8 @@ const createChild = (container, child) => {
     }
 }
 
-const createCards = () => {
-    const container = document.getElementById("advertisements")
-    
-    cards.map(card => {
+const createCards = (element) => {
+    element.map(card => {
         const cardContainer = createElement("div", ["card", "mb-4", "col-md-4"])
         const imgCard = createElement("img", ["card-img-top"])
 
@@ -101,4 +102,30 @@ const createCards = () => {
     })
 }
 
-createCards();
+const filter = (evt) => {
+    const cardsTitleSelector = [...document.querySelectorAll(".card-title")]
+    const cardsSelector = [...document.querySelectorAll(".card")]
+
+    const emptyBlock = createElement("h3", ["card-empty", "d-flex", "align-items-center", "justify-content-center", "m-0", "mt-5", "w-100", "h-100"])
+    emptyBlock.textContent = "No cards found"
+
+    cardsTitleSelector.map(title => {
+        if (!title.textContent.toLowerCase().includes(evt.target.value.toLowerCase())) {
+            title.parentElement.parentElement.classList.add("hide")
+        } else {
+            title.parentElement.parentElement.classList.remove("hide")
+        }
+    })
+
+    if (cardsSelector.every(card => card.classList.contains("hide"))) {
+        if (!container.querySelector(".card-empty")) {
+            container.appendChild(emptyBlock)
+        }
+    } else {
+        container.removeChild(document.querySelector(".card-empty"))
+    }
+}
+
+inputElement.addEventListener("input", filter)
+
+createCards(cards);
