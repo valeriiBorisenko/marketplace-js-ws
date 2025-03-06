@@ -1,0 +1,10 @@
+.card {
+    margin-bottom: 20px; /* Adjust the value to set the desired padding between ads */
+    border: none; /* Remove border for the cards */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Add a subtle box shadow for a lifted effect */
+}
+
+.card-footer {
+   background-color: #f8f9fa; /* Background color for the card footer */
+}
+
